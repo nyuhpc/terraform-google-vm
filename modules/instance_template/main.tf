@@ -111,8 +111,8 @@ resource "google_compute_instance_template" "tpl" {
     dynamic "access_config" {
       for_each = var.access_config
       content {
-        nat_ip       = can(access_config.value["nat_ip"]) ? access_config.value["nat_ip"] : null
-        network_tier = can(access_config.value["network_tier"]) ? access_config.value["network_tier"] : null
+        nat_ip       = try(access_config.value["nat_ip"], null )
+        network_tier = try(access_config.value["network_tier"], null)
       }
     }
     dynamic "alias_ip_range" {
@@ -134,8 +134,8 @@ resource "google_compute_instance_template" "tpl" {
       dynamic "access_config" {
         for_each = network_interface.value.access_config
         content {
-          nat_ip       = can(access_config.value["nat_ip"]) ? access_config.value["nat_ip"] : null
-          network_tier = can(access_config.value["network_tier"]) ? access_config.value["network_tier"] : null
+          nat_ip       = try(access_config.value["nat_ip"], null)
+          network_tier = try(access_config.value["network_tier"], null)
         }
       }
     }

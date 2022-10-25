@@ -70,7 +70,10 @@ variable "snapshot_schedule" {
 
   default   = {
     daily_schedule = null
-    hourly_schedule = null
+    hourly_schedule = {
+      hours_in_cycle = null
+      start_time     = null
+    }
     weekly_schedule = null
   }
 }

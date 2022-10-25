@@ -78,7 +78,7 @@ variable "snapshot_schedule" {
     #  start_time     = null
     #}
     #weekly_schedule = null
-  #}
+  }
 }
 
 variable "snapshot_properties" {

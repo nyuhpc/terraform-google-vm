@@ -34,7 +34,7 @@ resource "google_compute_resource_policy" "policy" {
     schedule {
       dynamic "daily_schedule" {
         #for_each = var.snapshot_schedule.daily_schedule == null ? [] : [var.snapshot_schedule.daily_schedule]
-        for_each = try(var.snapshot_schedule.daily_schedule, [])
+        for_each = try(var.snapshot_schedule.daily_schedule, null)
         content {
           days_in_cycle = try(daily_schedule.value.days_in_cycle, null)
           start_time    = try(daily_schedule.value.start_time, null)

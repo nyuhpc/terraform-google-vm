@@ -49,12 +49,12 @@ variable "snapshot_schedule" {
           start_time    = string
         }
       )
-      hourly_schedule = object(
-        {
-          hours_in_cycle = number
-          start_time     = string
-        }
-      )
+      #hourly_schedule = object(
+      #  {
+      #    hours_in_cycle = number
+      #    start_time     = string
+      #  }
+      #)
       #weekly_schedule = object(
       #  {
       #    day_of_weeks = set(object(

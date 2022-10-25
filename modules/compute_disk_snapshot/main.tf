@@ -50,19 +50,19 @@ resource "google_compute_resource_policy" "policy" {
         }
       }
 
-      dynamic "weekly_schedule" {
-        #for_each = var.snapshot_schedule.weekly_schedule == null ? [] : [var.snapshot_schedule.weekly_schedule]
-        for_each = try(var.snapshot_schedule.weekly_schedule, [])
-        content {
-          dynamic "day_of_weeks" {
-            for_each = try(weekly_schedule.value.day_of_weeks, [])
-            content {
-              day        = try(day_of_weeks.value["day"], null)
-              start_time = try(day_of_weeks.value["start_time"], null)
-            }
-          }
-        }
-      }
+      #dynamic "weekly_schedule" {
+      #  #for_each = var.snapshot_schedule.weekly_schedule == null ? [] : [var.snapshot_schedule.weekly_schedule]
+      #  for_each = try(var.snapshot_schedule.weekly_schedule, [])
+      #  content {
+      #    dynamic "day_of_weeks" {
+      #      for_each = try(weekly_schedule.value.day_of_weeks, [])
+      #      content {
+      #        day        = try(day_of_weeks.value["day"], null)
+      #        start_time = try(day_of_weeks.value["start_time"], null)
+      #      }
+      #    }
+      #  }
+      #}
     }
 
     dynamic "snapshot_properties" {

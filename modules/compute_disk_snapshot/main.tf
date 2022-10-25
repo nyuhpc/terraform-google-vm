@@ -36,7 +36,7 @@ resource "google_compute_resource_policy" "policy" {
         for_each = var.snapshot_schedule.daily_schedule == null ? [] : [var.snapshot_schedule.daily_schedule]
         content {
           days_in_cycle = try(daily_schedule.value.days_in_cycle, null)
-          start_time    = try(daily_schedule.value.start_time, nyll)
+          start_time    = try(daily_schedule.value.start_time, null)
         }
       }
 

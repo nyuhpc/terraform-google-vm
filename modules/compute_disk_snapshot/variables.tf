@@ -68,11 +68,11 @@ variable "snapshot_schedule" {
     }
   )
 
-  #default   = {
-  #  daily_schedule = {
-  #    days_in_cycle = null
-  #    start_time    = ""
-  #  }
+  default   = {
+    daily_schedule = {
+      days_in_cycle = null
+      start_time    = ""
+    }
     #hourly_schedule = {
     #  hours_in_cycle = null
     #  start_time     = null

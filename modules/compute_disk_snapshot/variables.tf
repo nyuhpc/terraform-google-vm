@@ -77,7 +77,12 @@ variable "snapshot_schedule" {
       hours_in_cycle = null
       start_time     = null
     }
-    #weekly_schedule = null
+    weekly_schedule = {
+      day_of_weeks = [{
+        day        = null
+        start_time = null
+      }]
+    }
   }
 }
 

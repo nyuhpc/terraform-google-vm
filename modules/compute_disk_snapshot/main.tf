@@ -40,14 +40,14 @@ resource "google_compute_resource_policy" "policy" {
         }
       }
 
-      #dynamic "hourly_schedule" {
-      #  for_each = try(var.snapshot_schedule.hourly_schedule == null ? [] : [var.snapshot_schedule.hourly_schedule], [])
-      #  #for_each = try(var.snapshot_schedule.hourly_schedule, [])
-      #  content {
-      #    hours_in_cycle = try(hourly_schedule.value["hours_in_cycle"], null)
-      #    start_time     = try(hourly_schedule.value["start_time"], null)
-      #  }
-      #}
+      dynamic "hourly_schedule" {
+        for_each = try(var.snapshot_schedule.hourly_schedule == null ? [] : [var.snapshot_schedule.hourly_schedule], [])
+        #for_each = try(var.snapshot_schedule.hourly_schedule, [])
+        content {
+          hours_in_cycle = try(hourly_schedule.value["hours_in_cycle"], null)
+          start_time     = try(hourly_schedule.value["start_time"], null)
+        }
+      }
 
       #dynamic "weekly_schedule" {
       #  #for_each = var.snapshot_schedule.weekly_schedule == null ? [] : [var.snapshot_schedule.weekly_schedule]

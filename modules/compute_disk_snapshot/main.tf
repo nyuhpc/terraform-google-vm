@@ -33,7 +33,9 @@ resource "google_compute_resource_policy" "policy" {
 
     schedule {
       dynamic "daily_schedule" {
-        for_each = var.snapshot_schedule.daily_schedule == null ? [] : [var.snapshot_schedule.daily_schedule]
+        #for_each = var.snapshot_schedule.daily_schedule == null ? [] : [var.snapshot_schedule.daily_schedule]
+        for_each = can( [var.snapshot_schedule.daily_schedule] ? [var.snapshot_schedule.daily_schedule])
+        nat_ip       = can(access_config.value["nat_ip"]) ? access_config.value["nat_ip"] : null
         #for_each = try(var.snapshot_schedule.daily_schedule, [])
         content {
           days_in_cycle = try(daily_schedule.value.days_in_cycle, null)

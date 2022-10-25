@@ -67,6 +67,12 @@ variable "snapshot_schedule" {
       )
     }
   )
+
+  default   = {
+    daily_schedule = null
+    hourly_schedule = null
+    weekly_schedule = null
+  }
 }
 
 variable "snapshot_properties" {

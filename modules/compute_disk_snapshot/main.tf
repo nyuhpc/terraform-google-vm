@@ -45,7 +45,7 @@ resource "google_compute_resource_policy" "policy" {
         #for_each = try(var.snapshot_schedule.hourly_schedule, [])
         content {
           hours_in_cycle = can(hourly_schedule.value["hours_in_cycle"]) ? hourly_schedule.value["hours_in_cycle"] : null
-          start_time     = try(hourly_schedule.value["start_time"]) ? hourly_schedule.value["start_time"] : null
+          start_time     = can(hourly_schedule.value["start_time"]) ? hourly_schedule.value["start_time"] : ""
           #hours_in_cycle = try(hourly_schedule.value["hours_in_cycle"], null)
           #start_time     = try(hourly_schedule.value["start_time"], null)
         }

@@ -68,22 +68,22 @@ variable "snapshot_schedule" {
     }
   )
 
-  default   = {
-    daily_schedule = {
-      days_in_cycle = null
-      start_time    = ""
-    }
-    hourly_schedule = {
-      hours_in_cycle = null
-      start_time     = null
-    }
-    weekly_schedule = {
-      day_of_weeks = [{
-        day        = null
-        start_time = null
-      }]
-    }
-  }
+  #default   = {
+  #  daily_schedule = {
+  #    days_in_cycle = null
+  #    start_time    = ""
+  #  }
+  #  hourly_schedule = {
+  #    hours_in_cycle = null
+  #    start_time     = null
+  #  }
+  #  weekly_schedule = {
+  #    day_of_weeks = [{
+  #      day        = null
+  #      start_time = null
+  #    }]
+  #  }
+  #}
 }
 
 variable "snapshot_properties" {

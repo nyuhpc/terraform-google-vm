@@ -54,6 +54,21 @@ variable "access_config" {
   default = []
 }
 
+variable "additional_networks" {
+  description = "Additional network interface details for GCE, if any."
+  default     = []
+  type = list(object({
+    network            = string
+    subnetwork         = string
+    subnetwork_project = string
+    network_ip         = string
+    access_config = list(object({
+      nat_ip       = string
+      network_tier = string
+    }))
+  }))
+}
+
 variable "num_instances" {
   description = "Number of instances to create. This value is ignored if static_ips is provided."
   default     = "1"

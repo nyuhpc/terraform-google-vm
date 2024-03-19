@@ -78,30 +78,21 @@ resource "google_compute_instance_from_template" "compute_instance" {
    }
   } # !- network_interface
 
-  dynamic "network_interface" {  # !+ network_interface
-   for_each = var.additional_networks
-
-   content {
-     network            = additional_networks.network
-     subnetwork         = additional_networks.subnetwork
-     subnetwork_project = additional_networks.subnetwork_project
-     network_ip         = additional_networks.network_ip
-    #  dynamic "access_config" {
-    #    for_each = additional_networks.access_config
-    #    content {
-    #      nat_ip       = access_config.value.nat_ip
-    #      network_tier = access_config.value.network_tier
-    #    }
-    #  }
-
-    #  dynamic "alias_ip_range" {
-    #    for_each = var.alias_ip_ranges
-    #    content {
-    #      ip_cidr_range         = alias_ip_range.value.ip_cidr_range
-    #      subnetwork_range_name = alias_ip_range.value.subnetwork_range_name
-    #    }
-    #  }
-   }
+  dynamic "network_interface" {
+    for_each = var.additional_networks
+    content {
+      network            = network_interface.value.network
+      subnetwork         = network_interface.value.subnetwork
+      subnetwork_project = network_interface.value.subnetwork_project
+      network_ip         = length(network_interface.value.network_ip) > 0 ? network_interface.value.network_ip : null
+      dynamic "access_config" {
+        for_each = network_interface.value.access_config
+        content {
+          nat_ip       = try(access_config.value["nat_ip"], null)
+          network_tier = try(access_config.value["network_tier"], null)
+        }
+      }
+    }
   } # !- network_interface
 
 

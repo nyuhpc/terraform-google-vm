@@ -35,31 +35,35 @@ resource "google_compute_resource_policy" "policy" {
       dynamic "daily_schedule" {
         for_each = var.snapshot_schedule.daily_schedule == null ? [] : [var.snapshot_schedule.daily_schedule]
         content {
-          days_in_cycle = daily_schedule.value.days_in_cycle
-          start_time    = daily_schedule.value.start_time
+          days_in_cycle = try(daily_schedule.value.days_in_cycle, null)
+          start_time    = try(daily_schedule.value.start_time, null)
         }
       }
 
       dynamic "hourly_schedule" {
         for_each = var.snapshot_schedule.hourly_schedule == null ? [] : [var.snapshot_schedule.hourly_schedule]
+        #for_each = try(var.snapshot_schedule.hourly_schedule, [])
         content {
-          hours_in_cycle = hourly_schedule.value["hours_in_cycle"]
-          start_time     = hourly_schedule.value["start_time"]
+          hours_in_cycle = can(hourly_schedule.value["hours_in_cycle"]) ? hourly_schedule.value["hours_in_cycle"] : null
+          start_time     = can(hourly_schedule.value["start_time"]) ? hourly_schedule.value["start_time"] : ""
+          #hours_in_cycle = try(hourly_schedule.value["hours_in_cycle"], null)
+          #start_time     = try(hourly_schedule.value["start_time"], null)
         }
       }
 
-      dynamic "weekly_schedule" {
-        for_each = var.snapshot_schedule.weekly_schedule == null ? [] : [var.snapshot_schedule.weekly_schedule]
-        content {
-          dynamic "day_of_weeks" {
-            for_each = weekly_schedule.value.day_of_weeks
-            content {
-              day        = day_of_weeks.value["day"]
-              start_time = day_of_weeks.value["start_time"]
-            }
-          }
-        }
-      }
+      #dynamic "weekly_schedule" {
+      #  #for_each = var.snapshot_schedule.weekly_schedule == null ? [] : [var.snapshot_schedule.weekly_schedule]
+      #  for_each = try(var.snapshot_schedule.weekly_schedule, [])
+      #  content {
+      #    dynamic "day_of_weeks" {
+      #      for_each = try(weekly_schedule.value.day_of_weeks, [])
+      #      content {
+      #        day        = try(day_of_weeks.value["day"], null)
+      #        start_time = try(day_of_weeks.value["start_time"], null)
+      #      }
+      #    }
+      #  }
+      #}
     }
 
     dynamic "snapshot_properties" {

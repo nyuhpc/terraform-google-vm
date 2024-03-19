@@ -55,18 +55,35 @@ variable "snapshot_schedule" {
           start_time     = string
         }
       )
-      weekly_schedule = object(
-        {
-          day_of_weeks = set(object(
-            {
-              day        = string
-              start_time = string
-            }
-          ))
-        }
-      )
+      #weekly_schedule = object(
+      #  {
+      #    day_of_weeks = set(object(
+      #      {
+      #        day        = string
+      #        start_time = string
+      #      }
+      #    ))
+      #  }
+      #)
     }
   )
+
+  #default   = {
+  #  daily_schedule = {
+  #    days_in_cycle = null
+  #    start_time    = ""
+  #  }
+  #  hourly_schedule = {
+  #    hours_in_cycle = null
+  #    start_time     = null
+  #  }
+  #  weekly_schedule = {
+  #    day_of_weeks = [{
+  #      day        = null
+  #      start_time = null
+  #    }]
+  #  }
+  #}
 }
 
 variable "snapshot_properties" {

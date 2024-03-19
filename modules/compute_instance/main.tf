@@ -16,7 +16,7 @@
 
 locals {
   hostname      = var.hostname == "" ? "default" : var.hostname
-  num_instances = length(var.static_ips) == 0 ? var.num_instances : length(var.static_ips)
+  num_instances = 1
 
   # local.static_ips is the same as var.static_ips with a dummy element appended
   # at the end of the list to work around "list does not have any elements so cannot
@@ -52,31 +52,31 @@ resource "google_compute_instance_from_template" "compute_instance" {
   resource_policies   = var.resource_policies
 
 
-  #dynamic "network_interface" {  # !+ network_interface
-  #  for_each = local.network_interface
+  dynamic "network_interface" {  # !+ network_interface
+   for_each = local.network_interface
 
-  #  content {
-  #    network            = var.network
-  #    subnetwork         = var.subnetwork
-  #    subnetwork_project = var.subnetwork_project
-  #    network_ip         = length(var.static_ips) == 0 ? "" : element(local.static_ips, count.index)
-  #    dynamic "access_config" {
-  #      for_each = var.access_config
-  #      content {
-  #        nat_ip       = access_config.value.nat_ip
-  #        network_tier = access_config.value.network_tier
-  #      }
-  #    }
+   content {
+     network            = var.network
+     subnetwork         = var.subnetwork
+     subnetwork_project = var.subnetwork_project
+     network_ip         = length(var.static_ips) == 0 ? "" : element(local.static_ips, count.index)
+     dynamic "access_config" {
+       for_each = var.access_config
+       content {
+         nat_ip       = access_config.value.nat_ip
+         network_tier = access_config.value.network_tier
+       }
+     }
 
-  #    dynamic "alias_ip_range" {
-  #      for_each = var.alias_ip_ranges
-  #      content {
-  #        ip_cidr_range         = alias_ip_range.value.ip_cidr_range
-  #        subnetwork_range_name = alias_ip_range.value.subnetwork_range_name
-  #      }
-  #    }
-  #  }
-  #} # !- network_interface
+     dynamic "alias_ip_range" {
+       for_each = var.alias_ip_ranges
+       content {
+         ip_cidr_range         = alias_ip_range.value.ip_cidr_range
+         subnetwork_range_name = alias_ip_range.value.subnetwork_range_name
+       }
+     }
+   }
+  } # !- network_interface
 
   source_instance_template = var.instance_template
 }
